@@ -1,6 +1,8 @@
 from tkinter import *
 from functools import partial
+from sql_functions import sql_func
 
+sq = sql_func()
 window = Tk()
 window.geometry('500x450')
 window.title('Employee Interest Input')
@@ -13,8 +15,8 @@ event2 = StringVar()
 i = 0
 
 def submit(uname,domain,event1,event2):
-	print(uname.get())
-	print(domain.get())
+	sq.insert_data(uname.get(),domain.get(),event1.get(),event2.get())
+	sq.close()
 	return
 
 def get_label_entry(t,tv,i):
