@@ -7,7 +7,7 @@ class sql_func:
 			employee_interest(name TEXT,domain TEXT,event1 TEXT,event2 TEXT)")
 
 	def insert_data(self,uname,dom,ev1,ev2):       ### can try with *args
-		self.conn.execute("INSERT INTO employee_interest (name,domain,event1,event2) \
+		self.conn.execute("INSERT INTO employee_data (name,domain,event1,event2) \
 			VALUES (?,?,?,?)",(uname,dom,ev1,ev2))
 		self.conn.commit()
 
