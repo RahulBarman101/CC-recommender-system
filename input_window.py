@@ -2,12 +2,17 @@ from tkinter import *
 from tkinter import messagebox
 from functools import partial
 from sql_functions import sql_func
+import pickle
+
+domains = pickle.load(open('unique_domain.pickle','rb'))
+events = pickle.load(open('unique_event.pickle','rb'))
 
 ### initializations and initial setups
 sq = sql_func()
 window = Tk()
 window.geometry('500x450')
 window.title('Employee Interest Input')
+
 
 
 
@@ -18,45 +23,57 @@ event1 = StringVar()
 event2 = StringVar()
 
 i = 0
+global new_win
 
 def submit(uname,domain,event1,event2):
 	''' 
 	function for button press and store of data
 	'''
-	MsgBox = messagebox.askquestion ('Submitted','Do you want to Exit?',icon = 'warning')
+	MsgBox = messagebox.askquestion ('Submitted','Submitted and stored successfully',
+									icon = 'warning')
 	if MsgBox == 'yes':
 		window.destroy()
+		create_new_win()
+		return 
 	else:
 		messagebox.showinfo('Return','You will now return to the screen')
 	sq.insert_data(uname.get(),domain.get(),event1.get(),event2.get())
 	sq.close()
 	return
 
-def get_label_entry(t,tv,i):
-	'''
-	function to create label and entries widget for the tkinter window
-	params:
-	t-> text of the label
-	tv-> the string variable object to store the user typed data
-	i-> to keep track of the row to place the widgets
-	'''
-	label = Label(window,text=t,height=3,width=10).grid(column=0,row=i)
-	entry = Entry(window,textvariable=tv).grid(column=1,row=i)
-	return label,entry
+def create_new_win():
+	new_win = Tk()
+	new_win.geometry('500x450')
+	
 
+uname_label = Label(window,text='Name',height=3,width=10).grid(column=0,row=1)
+uname_entry = Entry(window,textvariable=uname).grid(column=1,row=1)
 
+domain_label = Label(window,text='Domain').grid(column=0,row=2)
+domain.set('Artificial Intelligence')
+domain_drop = OptionMenu(window, domain, "Artificial Intelligence", "Blockchain", "C",\
+ "C++", "Cloud Computing", "Coding", "Data Science", "Development processes",\
+  "Finance", "Hardware", "Higher Education", "IoT", "Java", "JavaScript",\
+   "Machine learning", "Management", "Mobile Applications", "Networking",\
+    "Python", "Security", "Software Architecture", "Web Development", "Other")
+domain_drop.grid(column=1,row=2)
 
-uname_label,uname_entry = get_label_entry('Name',uname,i)
-i+=1
-domain_label,domain_entry = get_label_entry('Domain',domain,i)
-i+=1
-event1_label,event1_entry = get_label_entry('Event1',event1,i)
-i+=1
-event2_label,event2_entry = get_label_entry('Event2',event2,i)
+event1_label = Label(window,text='Event1').grid(column=0,row=3)
+event1.set('Certifications')
+event1_drop = OptionMenu(window, event1, "Certifications", "Competitions", "Courses",\
+ "Expos", "Fests", "Hackathons", "Internships", "Jobs", "Seminars", "Talks",\
+  "Trainings", "Webinars", "Workshops")
+event1_drop.grid(column=1,row=3)
+
+event2_label = Label(window,text='Event2').grid(column=0,row=3)
+event2.set('Certifications')
+event2_drop = OptionMenu(window, event2, "Certifications", "Competitions", "Courses",\
+ "Expos", "Fests", "Hackathons", "Internships", "Jobs", "Seminars", "Talks",\
+  "Trainings", "Webinars", "Workshops")
+event2_drop.grid(column=1,row=4)
 
 submit = partial(submit,uname, domain, event1, event2)
 
-submit = Button(window,text='Submit',command=submit).grid(column=1,row=i+1)
-
+submit = Button(window,text='Submit',command=submit).grid(column=1,row=5)
 
 window.mainloop()
