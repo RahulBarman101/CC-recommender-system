@@ -1,11 +1,7 @@
 from tkinter import *
-from tkinter import messagebox
 from functools import partial
 from sql_functions import sql_func
 import pickle
-
-domains = pickle.load(open('unique_domain.pickle','rb'))
-events = pickle.load(open('unique_event.pickle','rb'))
 
 ### initializations and initial setups
 sq = sql_func()
@@ -14,15 +10,12 @@ window.geometry('500x450')
 window.title('Employee Interest Input')
 
 
-
-
 ### string object variables to store the text data
 uname = StringVar()
 domain = StringVar()
 event1 = StringVar()
 event2 = StringVar()
 
-i = 0
 global new_win
 
 def submit(uname,domain,event1,event2):
@@ -47,7 +40,7 @@ def create_new_win():
 	
 
 uname_label = Label(window,text='Name',height=3,width=10).grid(column=0,row=1)
-uname_entry = Entry(window,textvariable=uname).grid(column=1,row=1)
+uname_entry = Entry(window,textvariable=uname,width=30).grid(column=1,row=1,padx=20)
 
 domain_label = Label(window,text='Domain').grid(column=0,row=2)
 domain.set('Artificial Intelligence')
