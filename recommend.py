@@ -9,6 +9,19 @@ features = df.iloc[:,2:]
 # print(features.head())
 events = pickle.load(open('events.pickle','rb'))
 domains = pickle.load(open('domains.pickle','rb'))
+
+evs = []
+doms = []
+s = input('Enter the sentence:')
+
+for i in events:
+	if i in s:
+		evs.append(i)
+
+for j in domains:
+    if j in s:
+        doms.append(j)
+
 # print(domains)
 dom = input("enter the domain: ")
 ev1 = input("enter event 1: ")
